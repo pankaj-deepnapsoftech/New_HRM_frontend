@@ -1,4 +1,5 @@
 import React from "react";
+import { GoCodeReview } from "react-icons/go";
 
 const showCauseData = [
   {
@@ -21,14 +22,14 @@ const showCauseData = [
 
 const ShowCauseNotices = () => {
   return (
-    <div className="p-4 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
+    <div className="p-4 h-screen bg-gray-50 rounded shadow-md max-w-5xl mx-auto">
       {/* Header */}
       <div className="bg-gray-300 text-gray-600 text-xl font-semibold py-4 px-4 rounded-xl shadow-md shadow-gray-400  w-full max-w-6xl text-center">
         Employee Show Cause Notices
       </div>
 
       {/* Table */}
-      <div className="w-full max-w-6xl overflow-x-auto scrollbar-visible bg-white shadow rounded-xl mt-10 ">
+      <div className="w-full max-w-6xl overflow-x-auto scrollbar-visible bg-white shadow rounded-xl mt-20 ">
         <table className="w-4xl md:min-w-full divide-y divide-gray-200 text-sm text-left py-">
           <thead className="bg-gray-200 text-gray-700 font-semibold">
             <tr>
@@ -43,7 +44,10 @@ const ShowCauseNotices = () => {
           </thead>
           <tbody>
             {showCauseData.map((entry, index) => (
-              <tr key={index} className="border-b text-[16px] whitespace-nowrap border-gray-300 text-gray-600">
+              <tr
+                key={index}
+                className="border-b text-[16px] whitespace-nowrap border-gray-300 text-gray-600"
+              >
                 <td className="px-4 py-3">{entry.complaintBy}</td>
                 <td className="px-4 py-3">{entry.department}</td>
                 <td className="px-4 py-3">{entry.reason}</td>
@@ -51,8 +55,8 @@ const ShowCauseNotices = () => {
                 <td className="px-4 py-3">{entry.complaintTo}</td>
                 <td className="px-4 py-3">{entry.status}</td>
                 <td className="px-4 py-3">
-                  <button className="bg-gradient-to-br from-blue-400 to-blue-500 hover:bg-blue-600 text-white text-sm px-1 md:px-3 py-1 md:py-2 rounded shadow">
-                    Mark as Reviewed
+                  <button title="Review" className="text-blue-700 font-bold">
+                    <GoCodeReview />
                   </button>
                 </td>
               </tr>

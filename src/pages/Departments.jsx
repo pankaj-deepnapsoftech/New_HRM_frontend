@@ -63,7 +63,7 @@ const Departments = () => {
     }
 
     return (
-        <div className="p-1 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
+        <div className="p-1 h-screen bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
 
             <div className="bg-gradient-to-b from-gray-300 to bg-gray-300 text text-center  mx-5 md:mx-10 py-4 my-6 rounded-md shadow-md shadow-gray-400">
                 <h2 className="text-xl font-[500]">All Department</h2>
@@ -74,7 +74,7 @@ const Departments = () => {
                         setShowModal(true);
                         setEditable(null)
                     }}
-                    className="bg-gradient-to-br from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md"
+                    className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md"
                 >
                     Add Department
                 </button>
@@ -96,7 +96,7 @@ const Departments = () => {
                                     <td className="p-4 whitespace-nowrap">{dept.sub_department}</td>
                                     <td className="p-4 whitespace-nowrap flex gap-3">
                                         <button onClick={() => { setEditable(dept); setShowModal(true) }} >
-                                            <SquarePen color='blue' size={18} />
+                                            <SquarePen color='gray' size={18} />
                                         </button>
                                         <button disabled={deleting} onClick={() => handledelete(dept?._id)}>
                                             <Trash color='red' size={18} />

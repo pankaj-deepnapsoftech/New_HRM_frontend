@@ -10,7 +10,7 @@ const DailyAttendance = () => {
   console.log(userData?.data)
 
   return (
-    <section className="p-5 bg-gray-50 rounded  max-w-4xl mx-auto mt-10">
+    <section className="p-5 bg-gray-50 rounded  max-w-4xl mx-auto">
      <div className="bg-gray-300 text text-center  py-4 my-8 rounded-md shadow-md shadow-gray-400">
         <h2 className="text-xl font-[500]">Daily Attendance report</h2>
       </div>
