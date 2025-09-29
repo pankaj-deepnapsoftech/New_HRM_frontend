@@ -146,10 +146,7 @@ const EmployeeTable = () => {
           <thead className="bg-gray-200 text-[16px] text-gray-700 font-semibold">
             <tr>
               <th className="p-4 text-left whitespace-nowrap">Emp ID</th>
-              <th className="p-4 text-left whitespace-nowrap">Address</th>
-              <th className="p-4 text-left whitespace-nowrap">Department</th>
               
-              <th className="p-4 text-left whitespace-nowrap">Designation</th>
               <th className="p-4 text-left whitespace-nowrap">Bank Name</th>
               <th className="p-4 text-left whitespace-nowrap">Bank Account</th>
               <th className="p-4 text-left whitespace-nowrap">IFSC Code</th>
@@ -161,7 +158,6 @@ const EmployeeTable = () => {
                 Driving License
               </th>
               <th className="p-4 text-left whitespace-nowrap">Bank Proof</th>
-              <th className="p-4 text-left whitespace-nowrap">Salary</th>
               <th className="p-4 text-left whitespace-nowrap">Actions</th>
             </tr>
           </thead>
@@ -186,15 +182,7 @@ const EmployeeTable = () => {
                   <td className="pl-4 py-3">
                     {highlightSearchTerm(emp.Emp_id, searchQuery)}
                   </td>
-                  <td className="pl-4 py-3">
-                    {highlightSearchTerm(emp.Address, searchQuery)}
-                  </td>
-                  <td className="pl-4 py-3">
-                    {highlightSearchTerm(emp.Department, searchQuery)}
-                  </td>
-                  <td className="pl-4 py-3">
-                    {highlightSearchTerm(emp.Designation, searchQuery)}
-                  </td>
+              
                   <td className="pl-4 py-3">
                     {highlightSearchTerm(emp.Back_Name, searchQuery)}
                   </td>
@@ -257,9 +245,7 @@ const EmployeeTable = () => {
                       Bank Proof
                     </a>
                   </td>
-                  <td className="pl-4 py-3">
-                    {highlightSearchTerm(emp.salary, searchQuery)}
-                  </td>
+               
 
                   <td className="pl-4 py-6 flex gap-2 text-lg">
                     <FaEye
