@@ -180,7 +180,7 @@ const EmployeeTable = () => {
                   } text-[16px] `}
                 >
                   <td className="pl-4 py-3">
-                    {highlightSearchTerm(emp.Emp_id, searchQuery)}
+                    {highlightSearchTerm(emp?.Emp_id?.empCode, searchQuery)}
                   </td>
               
                   <td className="pl-4 py-3">

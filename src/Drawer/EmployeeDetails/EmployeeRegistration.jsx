@@ -23,7 +23,7 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
         initialValues: editTable || { 
             photo: "", pancard: '', aadhaar: '', Driving_Licance: '', Voter_Id: '',
             UAN_number: '', Back_Name: '', Bank_Account: '', IFSC_Code: '', Bank_Proof: "",
-            empFullName: '', empPhone: '',
+            empFullName: '',
         },
         validationSchema: EmpDetailsSchema,
         enableReinitialize: true,

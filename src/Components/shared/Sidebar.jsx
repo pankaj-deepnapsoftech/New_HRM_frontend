@@ -386,7 +386,7 @@ const Sidebar = () => {
             <span className="text-base">Logout</span>
           </button>
 
-          <style jsx>{`
+          <style>{`
             @keyframes gradientAnimation {
               0% {
                 background-position: 0% 50%;
