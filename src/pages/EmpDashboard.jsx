@@ -50,9 +50,6 @@ const EmpDashboard = () => {
   
   const uniqueDepartments = Object.keys(departmentMap || {});
 
-  const filteredSubDepartments = selectedDepartment
-    ? Array.from(departmentMap[selectedDepartment] || [])
-    : [];
 
 
 
@@ -104,6 +101,11 @@ const EmpDashboard = () => {
     },
   });
 
+
+  const filteredSubDepartments = formik.values.department
+    ? Array.from(departmentMap[formik.values.department] || [])
+    : [];
+  console.log(filteredSubDepartments)
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this employee?")) {
       try {
@@ -272,7 +274,7 @@ const EmpDashboard = () => {
               <IoIosClose size={32} />
             </button>
 
-            <h3 className="text-lg font-bold mb-4">
+            <h3 className="text-lg font-[600] mb-4">
               {editMode ? "Edit Employee" : "Add New Employee"}
             </h3>
             <form onSubmit={formik.handleSubmit} className="space-y-3">
@@ -316,7 +318,7 @@ const EmpDashboard = () => {
                 <select
                   name="department"
                   id="department"
-                  value={selectedDepartment}
+                  value={formik.values.department}
                   onChange={(e) => {
                     const selected = e.target.value;
                     setSelectedDepartment(selected);
@@ -333,6 +335,7 @@ const EmpDashboard = () => {
                     </option>
                   ))}
                 </select>
+
                 {formik.touched.department && formik.errors.department && (
                   <div className="text-red-500 text-sm mt-1">{formik.errors.department}</div>
                 )}
@@ -350,7 +353,7 @@ const EmpDashboard = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   className="w-full p-3 rounded-lg border border-gray-300"
-                  disabled={!selectedDepartment}
+                   disabled={!formik.values.department}
                 >
                   <option value="">Select Sub Department</option>
                   {filteredSubDepartments.map((sub, idx) => (

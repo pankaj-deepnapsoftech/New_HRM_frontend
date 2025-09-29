@@ -102,7 +102,7 @@ const EmployeeTable = () => {
   }, [refetch, showForm, page]);
 
   return (
-    <div className="p-1 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
+    <div className="p-1 h-screen bg-gray-50 rounded shadow-md max-w-5xl mx-auto ">
       <div className="bg-gradient-to-b from-gray-300 to bg-gray-300 text text-center  mx-5 md:mx-10 py-4 my-6 rounded-md shadow-md shadow-gray-400">
         <h2 className="text-xl font-[500]">Employees All Details</h2>
       </div>
@@ -146,10 +146,7 @@ const EmployeeTable = () => {
           <thead className="bg-gray-200 text-[16px] text-gray-700 font-semibold">
             <tr>
               <th className="p-4 text-left whitespace-nowrap">Emp ID</th>
-              <th className="p-4 text-left whitespace-nowrap">Address</th>
-              <th className="p-4 text-left whitespace-nowrap">Department</th>
               
-              <th className="p-4 text-left whitespace-nowrap">Designation</th>
               <th className="p-4 text-left whitespace-nowrap">Bank Name</th>
               <th className="p-4 text-left whitespace-nowrap">Bank Account</th>
               <th className="p-4 text-left whitespace-nowrap">IFSC Code</th>
@@ -161,7 +158,6 @@ const EmployeeTable = () => {
                 Driving License
               </th>
               <th className="p-4 text-left whitespace-nowrap">Bank Proof</th>
-              <th className="p-4 text-left whitespace-nowrap">Salary</th>
               <th className="p-4 text-left whitespace-nowrap">Actions</th>
             </tr>
           </thead>
@@ -186,15 +182,7 @@ const EmployeeTable = () => {
                   <td className="pl-4 py-3">
                     {highlightSearchTerm(emp.Emp_id, searchQuery)}
                   </td>
-                  <td className="pl-4 py-3">
-                    {highlightSearchTerm(emp.Address, searchQuery)}
-                  </td>
-                  <td className="pl-4 py-3">
-                    {highlightSearchTerm(emp.Department, searchQuery)}
-                  </td>
-                  <td className="pl-4 py-3">
-                    {highlightSearchTerm(emp.Designation, searchQuery)}
-                  </td>
+              
                   <td className="pl-4 py-3">
                     {highlightSearchTerm(emp.Back_Name, searchQuery)}
                   </td>
@@ -257,9 +245,7 @@ const EmployeeTable = () => {
                       Bank Proof
                     </a>
                   </td>
-                  <td className="pl-4 py-3">
-                    {highlightSearchTerm(emp.salary, searchQuery)}
-                  </td>
+               
 
                   <td className="pl-4 py-6 flex gap-2 text-lg">
                     <FaEye

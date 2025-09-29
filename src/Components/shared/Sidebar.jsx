@@ -360,8 +360,8 @@ const Sidebar = () => {
                           className={`flex items-center gap-1 px-1 py-3 rounded-md cursor-pointer transition duration-300 
                       ${
                         isSubActive
-                          ? "bg-white/90 font-bold shadow-md"
-                          : "hover:bg-white/10"
+                          ? "bg-indigo-500 text-white font-semibold shadow-sm"
+                          : "hover:bg-sky-50 hover:text-indigo-500"
                       }`}
                           style={isSubActive ? { color: '#0d4b55' } : {}}
                         >

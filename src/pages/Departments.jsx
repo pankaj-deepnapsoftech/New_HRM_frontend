@@ -63,7 +63,7 @@ const Departments = () => {
     }
 
     return (
-        <div className="p-1 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
+        <div className="p-1 h-screen bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
 
             <div className="bg-gradient-to-b from-gray-300 to bg-gray-300 text text-center  mx-5 md:mx-10 py-4 my-6 rounded-md shadow-md shadow-gray-400">
                 <h2 className="text-xl font-[500]">All Department</h2>
