@@ -2,118 +2,104 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 const AccountSettingsModal = ({ isOpen, onClose }) => {
+  
   const fullName = useSelector((state) => state.Auth.fullName);
   const [firstName, lastName] = fullName?.split(" ") || ["", ""];
   const username = useSelector((state) => state.Auth.username);
   const email = useSelector((state) => state.Auth.email);
   const phone = useSelector((state) => state.Auth.phone);
-
   if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-      <div className="bg-white rounded-2xl w-full max-w-3xl ml-30 shadow-2xl p-8 relative overflow-hidden animate-scale-in">
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-lg w-full max-w-2xl shadow-lg p-8 relative">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl transition-colors"
+          className="absolute top-4 right-4 text-gray-500 hover:text-red-500 text-xl"
         >
           ×
         </button>
 
         <div className="flex flex-col md:flex-row gap-8">
           {/* Sidebar */}
-          <aside className="w-full md:w-1/3 bg-gradient-to-b from-indigo-50 to-white border-r border-gray-200 pr-6 rounded-l-2xl">
+          <aside className="w-full md:w-1/3 border-r border-gray-200 pr-6">
             <div className="flex flex-col items-center text-center">
               <img
                 src="/profilee.png"
                 alt="Profile"
-                className="w-24 h-24 rounded-full mb-3 shadow-md border-4 border-white object-cover"
+                className="w-24 h-24 rounded-full mb-2"
               />
-              <h2 className="font-semibold text-lg mb-6 text-gray-800 truncate">
-                {fullName}
-              </h2>
-              <ul className="space-y-2 text-left w-full">
-                <li className="px-4 py-2 rounded-lg cursor-pointer bg-indigo-100 text-indigo-700 font-semibold shadow-sm hover:shadow-md transition-all">
+              <h2 className="font-semibold text-lg mb-6">{fullName}</h2>
+              <ul className="space-y-4 text-left w-full">
+                <li className="text-gray-600 hover:text-blue-500 font-semibold">
                   Account Settings
                 </li>
-                <li className="px-4 py-2 rounded-lg cursor-pointer hover:bg-indigo-50 hover:text-indigo-600 font-medium transition-all">
+                <li className="text-gray-600 hover:text-blue-500 font-semibold">
                   Privacy
                 </li>
+                {/* <li className="text-gray-600">Personal Information</li>
+                <li className="text-gray-600">Notification</li> */}
               </ul>
             </div>
           </aside>
 
           {/* Form Content */}
           <div className="w-full md:w-2/3">
-            <h2 className="text-2xl font-semibold mb-6 text-gray-800">
-              Account Settings
-            </h2>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <h2 className="text-xl font-semibold mb-6">Account Settings</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-sm font-medium text-gray-600">
-                  First Name
-                </label>
+                <label className="text-sm text-gray-800">First name</label>
                 <input
                   type="text"
-                  className="w-full mt-1 px-4 py-2 h-11 rounded-lg border border-gray-300 bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
+                   className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
                   defaultValue={firstName}
                 />
               </div>
-
               <div>
-                <label className="text-sm font-medium text-gray-600">
-                  Last Name
-                </label>
+                <label className="text-sm text-gray-800">Last name</label>
                 <input
                   type="text"
-                  className="w-full mt-1 px-4 py-2 h-11 rounded-lg border border-gray-300 bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
+                  className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
                   defaultValue={lastName}
                 />
               </div>
-
               <div>
-                <label className="text-sm font-medium text-gray-600">
-                  Username
-                </label>
+                <label className="text-sm text-gray-800">Username</label>
                 <input
                   type="text"
-                  className="w-full mt-1 px-4 py-2 h-11 rounded-lg border border-gray-300 bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
+                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
                   defaultValue={username}
                 />
               </div>
-
+              {/* <div>
+                <label className="text-sm text-gray-800">Password</label>
+                <input type="password" className="w-full border border-gray-400 rounded px-3 py-2 mt-1" defaultValue={} />
+              </div> */}
               <div>
-                <label className="text-sm font-medium text-gray-600">
-                  Email
-                </label>
+                <label className="text-sm text-gray-800">E-mail</label>
                 <input
                   type="email"
-                  className="w-full mt-1 px-4 py-2 h-11 rounded-lg border border-gray-300 bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
+                  className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
                   defaultValue={email}
                 />
               </div>
-
-              <div className="sm:col-span-2">
-                <label className="text-sm font-medium text-gray-600">
-                  Phone Number
-                </label>
+              <div>
+                <label className="text-sm text-gray-800">Phone number</label>
                 <input
                   type="tel"
-                  className="w-full mt-1 px-4 py-2 h-11 rounded-lg border border-gray-300 bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
+                   className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
                   defaultValue={phone}
                 />
               </div>
             </div>
 
-            <div className="flex gap-4 mt-8">
-              <button className="flex-1 bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white font-medium px-6 py-3 rounded-lg shadow-md hover:shadow-lg hover:scale-[1.02] transition-all">
+            <div className="flex gap-4 mt-6">
+              <button className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-6 py-2 rounded">
                 Save
               </button>
               <button
                 onClick={onClose}
-                className="flex-1 text-gray-600 px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 hover:scale-[1.02] transition-all font-medium"
+                className="text-gray-600 px-4 border border-gray-400 rounded hover:scale-105"
               >
                 Cancel
               </button>
@@ -121,17 +107,6 @@ const AccountSettingsModal = ({ isOpen, onClose }) => {
           </div>
         </div>
       </div>
-
-      {/* Animations */}
-      <style>
-        {`
-          @keyframes scale-in {
-            0% { opacity: 0; transform: scale(0.95); }
-            100% { opacity: 1; transform: scale(1); }
-          }
-          .animate-scale-in { animation: scale-in 0.25s ease-out; }
-        `}
-      </style>
     </div>
   );
 };

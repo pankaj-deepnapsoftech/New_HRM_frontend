@@ -21,8 +21,13 @@ import AdminRouteGuard from "@/Components/AdminRouteGuard";
 import Departments from "@/pages/Departments";
 import MainDashboardPage from "@/pages/MainDashboardPage";
 import EmployeesReports from "@/pages/EmployeesReports";
+import HRDashboard from "@/pages/HRDashboard";
 
 export const MainRoutes = [
+  {
+    path: "/hr-dashboard",
+    element: <AdminRouteGuard><HRDashboard /></AdminRouteGuard>,
+  },
   {
     path: "/",
     element: <AdminRouteGuard><MainDashboardPage /></AdminRouteGuard>,

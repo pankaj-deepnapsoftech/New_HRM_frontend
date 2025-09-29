@@ -6,6 +6,10 @@ export const Api = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_BACKEND_URL,credentials:"include" }),
     endpoints: (builder) => ({
         // Leave Request Endpoints
+        getPendingLeaveRequests: builder.query({
+            query: () => '/leaves/requests/pending',
+            providesTags: ['LeaveRequest'],
+        }),
         submitLeaveRequest: builder.mutation({
             query: (leaveData) => ({
                 url: '/leaves/requests',
@@ -22,11 +26,11 @@ export const Api = createApi({
             query: (id) => `/leaves/requests/${id}`,
             providesTags: ['LeaveRequest'],
         }),
-        updateLeaveRequest: builder.mutation({
-            query: ({ id, ...patch }) => ({
-                url: `/leaves/requests/${id}`,
+        updateRequestStatus: builder.mutation({
+            query: ({ id, status }) => ({
+                url: `/leaves/requests/${id}/status`,
                 method: 'PATCH',
-                body: patch,
+                body: { status },
             }),
             invalidatesTags: ['LeaveRequest'],
         }),
@@ -44,10 +48,11 @@ export const Api = createApi({
 
 // Export the generated hooks
 export const {
+    useGetPendingLeaveRequestsQuery,
     useSubmitLeaveRequestMutation,
     useGetLeaveRequestsQuery,
     useGetLeaveRequestByIdQuery,
-    useUpdateLeaveRequestMutation,
+    useUpdateRequestStatusMutation,
     useDeleteLeaveRequestMutation
 } = Api
 
