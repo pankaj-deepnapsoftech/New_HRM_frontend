@@ -4,11 +4,14 @@ import mapboxgl from "mapbox-gl";
 import { useGetAllEmpDataQuery } from "@/service/EmpData.services";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { toast } from "react-toastify";
+import Pagination from "./Pagination/Pagination";
 
 mapboxgl.accessToken = `${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
 
 const EmpLocation = () => {
-  const { data } = useGetAllEmpDataQuery();
+  const [page, setPage] = useState(1);
+  const limit = 10;
+  const { data } = useGetAllEmpDataQuery({ page, limit });
   const EmpLocation = data?.data || [];
 
   const [showMap, setShowMap] = useState(false);
@@ -79,16 +82,15 @@ const EmpLocation = () => {
             {EmpLocation?.map((emp, idx) => (
               <tr
                 key={idx}
-                className={`border-t border-gray-200 ${
-                  idx % 2 === 0 ? "bg-white" : "bg-gray-100"
-                }`}
+                className={`border-t border-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-100"
+                  }`}
               >
                 <td className="p-2 px-3">{emp.fname || "NA"}</td>
                 <td className="p-2 px-3">{emp.email || "NA"}</td>
                 <td
                   className="p-2 px-3 text-blue-600 hover:underline cursor-pointer"
                   onClick={() => handleLocationClick(emp.location)}
-                >  
+                >
                   {emp.location || "NA"}
                 </td>
                 <td className="p-2 px-3">{emp.department || "NA"}</td>
@@ -117,7 +119,7 @@ const EmpLocation = () => {
         </div>
       )}
 
-     
+
       <style >{`
         @keyframes fadeIn {
           from { opacity: 0; }
@@ -134,6 +136,8 @@ const EmpLocation = () => {
           animation: scaleIn 0.3s ease forwards;
         }
       `}</style>
+
+      <Pagination page={page} setPage={setPage} hasNextPage={EmpLocation.length === 10} />
     </div>
   );
 };

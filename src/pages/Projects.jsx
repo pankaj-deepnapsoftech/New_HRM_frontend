@@ -37,6 +37,7 @@ const Projects = ({ searchQuery }) => {
     description: "",
   });
 
+  // eslint-disable-next-line no-unused-vars
   const getSelectedOptions = (options, selectedIds) =>
     options.filter((option) => selectedIds.includes(option.value));
 
@@ -139,40 +140,48 @@ const Projects = ({ searchQuery }) => {
     }));
 
   return (
-    <div className="p-6 bg-gray-50 rounded shadow-md max-w-4xl mx-auto mt-10">
+    <div className="p-6 bg-gray-50 rounded shadow-md max-w-4xl mx-auto">
       <div className="bg-gray-300 text-center py-4 my-8 rounded-md shadow-md shadow-gray-400">
         <h2 className="text-xl font-[500]">Projects</h2>
       </div>
 
-      {/* Date Range + Add Button */}
-      <div className="flex flex-col md:flex-row gap-4 mb-6">
-        <div className="flex flex-col md:flex-row gap-2 md:items-center">
-          <label className="font-semibold text-md">Select date range:</label>
-          <div className="flex flex-col md:flex-row gap-2 md:items-center">
-            <label className="font-semibold text-sm text-gray-600">From-</label>
-            <input
-              type="date"
-              className="border border-gray-400 px-3 py-2 rounded"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col md:flex-row gap-2 md:items-center">
-            <label className="font-semibold text-sm text-gray-600">To-</label>
-            <input
-              type="date"
-              className="border border-gray-400 px-3 py-2 rounded"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-            />
+      <div className="flex flex-col md:flex-row items-start md:items-end gap-4 mb-6 w-full">
+        {/* Left side - Date Inputs */}
+        <div className="flex flex-col md:flex-row gap-4 flex-1 w-full">
+          <div className="flex flex-col md:flex-row gap-2 md:items-center flex-1">
+            <label className="font-semibold text-md">Select date range:</label>
+            <div className="flex flex-col md:flex-row gap-2 md:items-center flex-1">
+              <label className="font-semibold text-sm text-gray-600">
+                From-
+              </label>
+              <input
+                type="date"
+                className="border border-gray-400 px-3 py-2 rounded w-full"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col md:flex-row gap-2 md:items-center flex-1">
+              <label className="font-semibold text-sm text-gray-600">To-</label>
+              <input
+                type="date"
+                className="border border-gray-400 px-3 py-2 rounded w-full"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+            </div>
           </div>
         </div>
-        <button
-          onClick={() => setShowModal(true)}
-          className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md w-fit"
-        >
-          ADD PROJECT DETAILS
-        </button>
+
+        {/* Right side - Button */}
+        <div className="flex justify-end md:justify-end w-full md:w-auto">
+          <button
+            onClick={() => setShowModal(true)}
+            className="bg-gradient-to-br from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 hover:scale-105 text-white px-5 py-2 rounded-lg shadow-md transition transform font-semibold"
+          >
+            ADD PROJECT DETAILS
+          </button>
+        </div>
       </div>
 
       {/* Modal */}
@@ -293,12 +302,12 @@ const Projects = ({ searchQuery }) => {
         <table className="w-full min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-200 text-gray-700 text-sm font-[600] uppercase">
             <tr>
-              <th className="px-2 py-3 text-left">Project Name</th>
-              <th className="px-2 py-3 text-left">Member</th>
-              <th className="px-2 py-3 text-left">Manager</th>
-              <th className="px-2 py-3 text-left">Start-Date</th>
-              <th className="px-2 py-3 text-left">End-Date</th>
-              <th className="px-2 py-3 text-left">Action</th>
+              <th className="p-3 text-left">Project Name</th>
+              <th className="p-3 text-left">Member</th>
+              <th className="p-3 text-left">Manager</th>
+              <th className="p-3 text-left">Start-Date</th>
+              <th className="p-3 text-left">End-Date</th>
+              <th className="p-3 text-left">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -309,24 +318,26 @@ const Projects = ({ searchQuery }) => {
                   idx % 2 === 0 ? "bg-white" : "bg-gray-100"
                 }`}
               >
-                <td className="p-3 px-2">{project.name}</td>
-                <td className="p-3 px-2">
+                <td className="pl-4 py-3 px-6">{project.name}</td>
+                <td className="pl-4 py-3 px-6">
                   {project.members?.length > 0
                     ? project.members
                         .map((m) => m.fname || "Unknown")
                         .join(", ")
                     : "N/A"}
                 </td>
-                <td className="p-3 px-2">{project.manager?.fname || "N/A"}</td>
-                <td className="p-3 px-2">
+                <td className="pl-4 py-3 px-6">
+                  {project.manager?.fname || "N/A"}
+                </td>
+                <td className="pl-4 py-3 px-6">
                   {new Date(project.startDate).toLocaleDateString()}
                 </td>
-                <td className="p-3 px-2">
+                <td className="pl-4 py-3 px-6">
                   {new Date(project.endDate).toLocaleDateString()}
                 </td>
-                <td className="p-3 px-2 flex items-center">
+                <td className="pl-4 py-3 px-6 flex items-center">
                   <Eye
-                    className="cursor-pointer hover:text-blue-600 mr-4"
+                    className="cursor-pointer text-blue-500 hover:text-blue-600 mr-4"
                     size={18}
                     onClick={() => {
                       setShowDetailModal(true);
@@ -335,7 +346,7 @@ const Projects = ({ searchQuery }) => {
                     title="View Project"
                   />
                   <Trash
-                    className="cursor-pointer hover:text-red-600"
+                    className="cursor-pointer text-red-500 hover:text-red-600"
                     size={18}
                     onClick={() => handleDelete(project._id)}
                     title="Delete Project"

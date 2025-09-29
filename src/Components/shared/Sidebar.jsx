@@ -34,7 +34,7 @@ import { removeData } from "@/store/slice/AuthSlice";
 import EmployeeTable from "@/pages/Employees";
 import EmployeesReports from "@/pages/EmployeesReports";
 import DailyAttendance from "@/pages/DailyAttendance";
-import AllAttendence from "@/pages/AllAttendence";
+import AllAttendance from "@/pages/AllAttendence";
 import Projects from "@/pages/Projects";
 import EmpLeaveBalance from "@/pages/EmpLeaveBalance";
 import SalaryManagement from "@/pages/SalaryManagement";
@@ -43,17 +43,15 @@ import AssignAssets from "@/pages/Assets";
 import TerminatedEmp from "@/pages/TerminatedEmp";
 import GatepassApprovals from "@/pages/GatepassAproval";
 import ShowCauseNotices from "@/pages/ShowCauseNotices";
-import { FaChalkboardUser, FaPeopleRoof, FaUsersRectangle } from "react-icons/fa6";
+import { FaChalkboardUser, FaPeopleRoof } from "react-icons/fa6";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import PayrollSummary from "@/pages/PayrollSummary";
 import EmpMoneyRequest from "@/pages/EmpMoneyRequest";
 import Incentives from "@/pages/Incentives";
 import Reimbursements from "@/pages/Reimbursements";
 import EmpPayslip from "@/pages/EmpPayslip";
-import AllAttendance from "@/pages/AllAttendence";
 import AllLeaves from "@/pages/AllLeaves";
 import Departments from "@/pages/Departments";
-
 
 const Sidebar = () => {
   const [attendanceOpen, setAttendanceOpen] = useState(false);
@@ -61,27 +59,26 @@ const Sidebar = () => {
   const navigator = useNavigate();
   const [showSidebar, setShowSidebar] = useState(false);
   const sidebarRef = useRef(null);
- 
+
   const dispatch = useDispatch();
   const location = useLocation();
   const currPath = location.pathname;
   const [isOpen, setIsopen] = useState(false);
   const [payroolOpenArrow, setPayrollarrow] = useState(false);
 
- const [LogoutUser] = useLogoutUserMutation();
+  const [LogoutUser] = useLogoutUserMutation();
 
- const handleLogout = async () => {
-  try {
-    const res = await LogoutUser({isMobile, browser: browserName}).unwrap();
-    dispatch(removeData());
-    toast.success(res.message || "Logged out successfully");
-    console.log(res)
-    window.location.href = "/";
-  } catch (error) {
-    console.log(error)
-    toast.error(error?.data?.message || "Logout failed");
-  }
-};
+  const handleLogout = async () => {
+    try {
+      const res = await LogoutUser({ isMobile, browser: browserName }).unwrap();
+      dispatch(removeData());
+      toast.success(res.message || "Logged out successfully");
+      window.location.href = "/";
+    } catch (error) {
+      toast.error(error?.data?.message || "Logout failed");
+    }
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -114,7 +111,9 @@ const Sidebar = () => {
       path: "/empdashboard",
     },
     {
-      text: <span className="text-[1rem] font-semibold">Employees Details</span>,
+      text: (
+        <span className="text-[1rem] font-semibold">Employees Details</span>
+      ),
       icon: <BsPersonCircle className="text-2xl" />,
       path: "/employees",
       element: <EmployeeTable />,
@@ -286,7 +285,7 @@ const Sidebar = () => {
       <div className="flex items-center gap-10">
         <div className="md:hidden absolute z-50 top-4 left-3">
           <button onClick={() => setShowSidebar(!showSidebar)}>
-            <FaBars className="text-2xl text-black" />
+            <FaBars className="text-2xl text-indigo-700" />
           </button>
         </div>
       </div>
@@ -298,18 +297,21 @@ const Sidebar = () => {
       )}
       <aside
         ref={sidebarRef}
-        className={`sidebar-scroll overflow-y-auto fixed top-0 left-0 bottom-0 h-screen w-64 md:w-72 text-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out 
+        className={`sidebar-scroll overflow-y-auto fixed top-0 left-0 bottom-0 h-screen w-64 md:w-72 bg-white text-gray-800 shadow-xl z-50 transform transition-transform duration-300 ease-in-out 
   ${showSidebar ? "translate-x-0" : "-translate-x-full"} 
   md:translate-x-0 md:static md:block`}
-        style={{ backgroundColor: 'rgb(17, 85, 96)' }}
       >
-        <div className="flex items-center py-1 w-full border-b  " style={{ borderColor: 'rgba(255,255,255,0.4)' }}>
-          <img
-            src="/d logo.png"
-            alt="Deepnap Softech Logo"
-            className="brightness-0 invert h-[120px] "
-          />
-          <h2 className="text-xl relative right-4 font-bold tracking-wide">
+        {/* Logo */}
+        <div className="flex items-center gap-4 p-4 border-b border-gray-200 bg-gradient-to-r from-indigo-100 to-indigo-50 shadow-sm rounded-b-xl">
+          <div className="flex-shrink-0 relative">
+            <img
+              src="/d logo.png"
+              alt="Deepnap Softech Logo"
+              className="h-14 w-14 rounded-lg bg-white p-1 shadow-md transition-transform duration-300 hover:scale-105"
+            />
+            <span className="absolute -bottom-1 -right-1 h-2.5 w-2.5 bg-green-500 border-2 border-white rounded-full animate-pulse"></span>
+          </div>
+          <h2 className="text-lg md:text-xl font-medium tracking-wide text-sky-800">
             Deepnap Softech
           </h2>
         </div>
@@ -329,10 +331,9 @@ const Sidebar = () => {
                   className={`flex items-center gap-3 px-3 py-3 rounded-md cursor-pointer transition duration-300 
               ${
                 isActive
-                  ? "bg-white/90 font-bold shadow-md"
-                  : "hover:bg-white/10"
+                  ? "bg-indigo-500 text-white font-bold shadow-md"
+                  : "hover:bg-indigo-50 hover:text-indigo-600"
               }`}
-                  style={isActive ? { color: '#0d4b55' } : {}}
                 >
                   {item.icon}
                   <span>{item.text}</span>
@@ -350,13 +351,12 @@ const Sidebar = () => {
                             navigator(subItem.path);
                             if (window.innerWidth < 768) setShowSidebar(false);
                           }}
-                          className={`flex items-center gap-1 px-1 py-3 rounded-md cursor-pointer transition duration-300 
+                          className={`flex items-center gap-1 px-1 py-2 rounded-md cursor-pointer transition duration-300 
                       ${
                         isSubActive
-                          ? "bg-white/90 font-bold shadow-md"
-                          : "hover:bg-white/10"
+                          ? "bg-indigo-500 text-white font-semibold shadow-sm"
+                          : "hover:bg-sky-50 hover:text-indigo-500"
                       }`}
-                          style={isSubActive ? { color: '#0d4b55' } : {}}
                         >
                           {subItem.icon}
                           <span>{subItem.text}</span>
@@ -371,17 +371,34 @@ const Sidebar = () => {
         </nav>
 
         {/* Logout */}
-        <div className="mt-auto w-full px-6 py-4">
+        <div className="mt-20 w-full px-6 py-6 border-t border-gray-300">
           <button
             type="submit"
             onClick={handleLogout}
-            className=" w-40 md:w-48 flex items-center justify-center py-2 mt-8  ml-7 mb-5 p-3 text-white font-semibold rounded-lg transition duration-300 hover:brightness-110 hover:scale-105"
-            style={{ backgroundColor: '#42B9C6' }}
+            className="w-full flex items-center justify-center gap-2 py-3 text-white font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400"
+            style={{
+              background: "linear-gradient(80deg, #1e40af 0%, #4f46e5 100%)", 
+              backgroundSize: "200% 200%",
+              animation: "gradientAnimation 4s ease infinite",
+            }}
           >
-            {" "}
-            <FiLogOut size={15} className="shrink-0  " />
-            <span className="ml-2">Logout</span>
+            <FiLogOut size={18} />
+            <span className="text-base">Logout</span>
           </button>
+
+          <style jsx>{`
+            @keyframes gradientAnimation {
+              0% {
+                background-position: 0% 50%;
+              }
+              50% {
+                background-position: 100% 50%;
+              }
+              100% {
+                background-position: 0% 50%;
+              }
+            }
+          `}</style>
         </div>
       </aside>
     </>
