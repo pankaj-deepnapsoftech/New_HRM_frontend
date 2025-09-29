@@ -1,27 +1,29 @@
 /* eslint-disable no-unused-vars */
+import { useGetAllEmpDataQuery } from '@/service/EmpData.services';
 import { useEmpAllMutation, useEpmUpdateDataMutation } from '@/service/Employee.services';
 import EmpDetailsSchema from '@/Validation/EmployeeValidation/EmployeeDetailsValidations';
 import { useFormik } from 'formik';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { IoIosClose } from 'react-icons/io';
 import { toast } from 'react-toastify';
 
 const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
     const fileRefs = useRef({});
-
+    const [page,setPage] = useState(1)
+    const limit = 10 ;
     const [EmpAllData, { isLoading }] = useEmpAllMutation();
     const [EpmUpdateData] = useEpmUpdateDataMutation()
+    const { data: EmpData } = useGetAllEmpDataQuery({page,limit})
 
 
     const {
         handleBlur, handleSubmit, handleChange, resetForm,setFieldValue,
         touched, errors, values
     } = useFormik({
-        initialValues: editTable || {
-            Designation: '', Department: '', Address: '', salary: '',
+        initialValues: editTable || { 
             photo: "", pancard: '', aadhaar: '', Driving_Licance: '', Voter_Id: '',
             UAN_number: '', Back_Name: '', Bank_Account: '', IFSC_Code: '', Bank_Proof: "",
-            empFullName: '', empEmail: '', empPhone: '', empPassword: ''
+            empFullName: '',
         },
         validationSchema: EmpDetailsSchema,
         enableReinitialize: true,
@@ -35,14 +37,13 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
                         if (value && typeof value !== 'string') {
                             formData.append(key, value);
                         }
-                        // if it's a string (existing URL/path), skip so backend retains previous file
                     } else {
                         formData.append(key, value ?? '');
                     }
                 });
 
                 if (editTable) {
-                    // Keep the existing mutation signature by attaching _id onto the FormData object
+                    
                     formData._id = values._id;
                     await EpmUpdateData(formData).unwrap();
                     toast.success("Employee updated successfully");
@@ -57,10 +58,8 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
                         fileRefs.current[key].value = "";
                     }
                 });
-            } catch (error) {
-                
+            } catch (error) {  
                 console.log(error);
-
             }
         }
     });
@@ -77,69 +76,38 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
                     <IoIosClose size={32}/>
                 </button>
 
-                <h2 className="text-4xl font-bold text-center text-gray-700 mb-10">Employee Information Form</h2>
+                <h2 className="text-2xl font-bold text-center text-gray-700 mb-10">Employee Information Form</h2>
 
                 <form onSubmit={handleSubmit} className="space-y-8">
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {[
-                            { label: 'Designation', name: 'Designation' },
-                            { label: 'Department', name: 'Department' },
-                            { label: 'Salary', name: 'salary', type: 'number' }
-                        ].map(({ label, name, type = 'text' }) => (
-                            <div key={name}>
-                                <label className="block mb-1 font-medium text-gray-700">{label}</label>
-                                <input
-                                    type={type}
-                                    name={name}
-                                    value={values[name]}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
-                                />
-                                {touched[name] && errors[name] && (
-                                    <p className="text-sm text-red-500 mt-1">{errors[name]}</p>
-                                )}
-                            </div>
-                        ))}
-                    </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {[
-                            { label: 'Full Name', name: 'empFullName' },
-                            { label: 'Email (for login)', name: 'empEmail', type: 'email', placeholder: 'employee@example.com' },
-                            { label: 'Phone', name: 'empPhone' },
-                            { label: 'Password (for login)', name: 'empPassword', type: 'password', placeholder: 'Set a temporary password' }
-                        ].map(({ label, name, type = 'text', placeholder }) => (
-                            <div key={name}>
-                                <label className="block mb-1 font-medium text-gray-700">{label}</label>
-                                <input
-                                    type={type}
-                                    name={name}
-                                    value={values[name]}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    placeholder={placeholder}
-                                    className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
-                                />
-                                {touched[name] && errors[name] && (
-                                    <p className="text-sm text-red-500 mt-1">{errors[name]}</p>
-                                )}
-                            </div>
-                        ))}
-                    </div>
+                    <select
+                        id="empFullName"
+                        name="empFullName"
+                        value={values.empId}
+                        onChange={(e) => {
+                            const selectedId = e.target.value;
+                            const selectedEmp = EmpData?.data?.find(emp => emp._id === selectedId);
 
-                    <div>
-                        <label className="block mb-1 font-medium text-gray-700">Address</label>
-                        <textarea
-                            name="Address"
-                            rows="3"
-                            value={values.Address}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-400 shadow-sm"
-                        />
-                    </div>
+                            if (selectedEmp) {
+                                setFieldValue("empFullName", selectedEmp.fname || "");
+                              
+                                setFieldValue("_id", selectedEmp._id);
+                            }
+                        }}
+                        className="block w-full px-3 py-2 text-md text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm
+    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
+                        <option value="">Select a user</option>
+                        {EmpData?.data?.map((emp) => (
+                            <option key={emp._id} value={emp?._id}>
+                                {emp.fname}
+                            </option>
+
+                        ))}
+                    </select>
+
+               
 
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

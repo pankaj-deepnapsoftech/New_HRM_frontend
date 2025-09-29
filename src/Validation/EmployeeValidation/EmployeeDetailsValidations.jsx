@@ -19,10 +19,7 @@ const isPassingFileType = (value) => {
 };
 
 const EmpDetailsSchema = Yup.object().shape({
-  Designation: Yup.string().required('Designation is required'),
-  Department: Yup.string().required('Department is required'),
-  Address: Yup.string().required('Address is required'),
-  salary: Yup.number().required('Salary is required').min(0, 'Salary must be positive'),
+
 
   // File validations
   aadhaar: Yup.mixed()

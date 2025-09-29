@@ -13,7 +13,7 @@ const AllLeaves = () => {
   }
 
   return (
-    <div className="p-2 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10 ">
+    <div className="p-2 bg-gray-50 rounded shadow-md max-w-5xl mx-auto">
       <div className="bg-gray-300 text-gray-600 font-semibold text-xl py-4 px-6 mx-4 md:mx-6 text-center rounded-lg shadow-md shadow-gray-400">
         Employee All Leave
       </div>
