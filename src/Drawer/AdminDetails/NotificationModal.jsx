@@ -8,9 +8,9 @@ const notifications=[
 const NotificationModal = () => {
   return (
      <div className="absolute right-2 top-12 w-64 bg-white text-gray-600 rounded shadow-lg z-50">
-          <div className="absolute top-[-10px] right-24 w-0 h-0 border-l-[10px] border-r-[10px] border-b-[10px] border-l-transparent border-r-transparent border-b-[#906eb1fd]"></div>
+          <div className="absolute top-[-10px] right-24 w-0 h-0 border-l-[10px] border-r-[10px] border-b-[10px] border-l-transparent border-r-transparent border-b-indigo-400"></div>
 
-      <div className="bg-[#906eb1fd] text-white px-4 py-2 rounded-t flex justify-between items-center">
+      <div className="bg-indigo-500 text-white px-4 py-2 rounded-t flex justify-between items-center">
         <span className="font-semibold">Notifications</span>
         <span className="text-sm">135 new</span>
       </div>  
