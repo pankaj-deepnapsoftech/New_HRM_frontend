@@ -162,7 +162,7 @@ const AssignAssets = () => {
                       ).length === 0 || !selectedAssets[emp._id]
                     }
                   >
-                    ADD
+                    ADD        
                   </button>
                 </td>
               </tr>
