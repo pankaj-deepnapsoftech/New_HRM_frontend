@@ -5,7 +5,6 @@ import {
   useAddAssetMutation, // ✅ Use the correct hook
   useRemoveAssetMutation,
 } from "@/service/EmpData.services";
-import Pagination from "./Pagination/Pagination";
 
 // Available assets to pick from
 const assetOptions = ["Laptop", "Bike", "Mobile", "Headset"];
@@ -36,9 +35,7 @@ const customStyles = {
 };
 
 const AssignAssets = () => {
-  const [page, setPage] = useState(1);
-  const limit = 10;
-  const { data, isLoading, refetch } = useGetAllEmpDataQuery({ page, limit });
+  const { data, isLoading, refetch } = useGetAllEmpDataQuery();
   const [addAsset] = useAddAssetMutation();
   const [removeAsset] = useRemoveAssetMutation();
 
@@ -123,9 +120,7 @@ const AssignAssets = () => {
                 </td>
                 <td className="p-3 ">
                   <Select
-                    options={formattedAssetOptions.filter(
-                      (opt) => !(emp.assets || []).includes(opt.value)
-                    )}
+                    options={formattedAssetOptions.filter((opt) => !(emp.assets || []).includes(opt.value))}
                     value={
                       selectedAssets[emp._id]
                         ? {
@@ -145,11 +140,7 @@ const AssignAssets = () => {
                     menuPortalTarget={document.body}
                     menuPosition="absolute"
                     isClearable
-                    isDisabled={
-                      formattedAssetOptions.filter(
-                        (opt) => !(emp.assets || []).includes(opt.value)
-                      ).length === 0
-                    }
+                    isDisabled={formattedAssetOptions.filter((opt) => !(emp.assets || []).includes(opt.value)).length === 0}
                   />
                 </td>
                 <td className="p-3">
@@ -157,9 +148,8 @@ const AssignAssets = () => {
                     onClick={() => handleAddAsset(emp)}
                     className="bg-gradient-to-br from-green-400 to-green-500 text-white px-4 py-1 rounded hover:bg-gradient-to-tl disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={
-                      formattedAssetOptions.filter(
-                        (opt) => !(emp.assets || []).includes(opt.value)
-                      ).length === 0 || !selectedAssets[emp._id]
+                      formattedAssetOptions.filter((opt) => !(emp.assets || []).includes(opt.value)).length === 0 ||
+                      !selectedAssets[emp._id]
                     }
                   >
                     ADD        
@@ -170,11 +160,6 @@ const AssignAssets = () => {
           </tbody>
         </table>
       </div>
-      <Pagination
-        page={page}
-        setPage={setPage}
-        hasNextPage={employees?.length === 10}
-      />
     </div>
   );
 };

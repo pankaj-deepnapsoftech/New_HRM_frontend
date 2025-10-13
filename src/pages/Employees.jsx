@@ -102,12 +102,12 @@ const EmployeeTable = () => {
   }, [refetch, showForm, page]);
 
   return (
-    <div className="p-1 bg-gray-50 rounded shadow-md max-w-5xl mx-auto ">
+    <div className="p-1 h-screen bg-gray-50 rounded shadow-md max-w-5xl mx-auto ">
       <div className="bg-gradient-to-b from-gray-300 to bg-gray-300 text text-center  mx-5 md:mx-10 py-4 my-6 rounded-md shadow-md shadow-gray-400">
         <h2 className="text-xl font-[500]">Employees All Details</h2>
       </div>
                      
-      <div className="flex justify-between mb-4 mt-10 gap-4 flex-wrap mx-5 md:mx-10">
+      <div className="flex justify-between mb-4 gap-4 flex-wrap mx-5 md:mx-10">
         <div className="flex gap-4 flex-wrap flex-1">
           <input
             type="text"
@@ -135,21 +135,18 @@ const EmployeeTable = () => {
               setShowFrom(!showForm);
               setEdittable(null);
             }}
-            className="bg-gradient-to-br from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white px-4 py-2 rounded-lg shadow-md"
+            className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md"
           >
             Add Employee Details
           </button>
         </div>
       </div>
       <div className="overflow-x-auto rounded-t-sm md:rounded-t-xl shadow-md mx-5 md:mx-10 mb-8 scrollbar-visible">
-        <table className="min-w-full shadow-lg border mt-10 border-gray-200 text-sm">
+        <table className="min-w-full shadow-lg border border-gray-200 text-sm">
           <thead className="bg-gray-200 text-[16px] text-gray-700 font-semibold">
             <tr>
               <th className="p-4 text-left whitespace-nowrap">Emp ID</th>
-              <th className="p-4 text-left whitespace-nowrap">Address</th>
-              <th className="p-4 text-left whitespace-nowrap">Department</th>
               
-              <th className="p-4 text-left whitespace-nowrap">Designation</th>
               <th className="p-4 text-left whitespace-nowrap">Bank Name</th>
               <th className="p-4 text-left whitespace-nowrap">Bank Account</th>
               <th className="p-4 text-left whitespace-nowrap">IFSC Code</th>
@@ -161,7 +158,6 @@ const EmployeeTable = () => {
                 Driving License
               </th>
               <th className="p-4 text-left whitespace-nowrap">Bank Proof</th>
-              <th className="p-4 text-left whitespace-nowrap">Salary</th>
               <th className="p-4 text-left whitespace-nowrap">Actions</th>
             </tr>
           </thead>
@@ -184,17 +180,9 @@ const EmployeeTable = () => {
                   } text-[16px] `}
                 >
                   <td className="pl-4 py-3">
-                    {highlightSearchTerm(emp.Emp_id, searchQuery)}
+                    {highlightSearchTerm(emp?.Emp_id?.empCode, searchQuery)}
                   </td>
-                  <td className="pl-4 py-3">
-                    {highlightSearchTerm(emp.Address, searchQuery)}
-                  </td>
-                  <td className="pl-4 py-3">
-                    {highlightSearchTerm(emp.Department, searchQuery)}
-                  </td>
-                  <td className="pl-4 py-3">
-                    {highlightSearchTerm(emp.Designation, searchQuery)}
-                  </td>
+              
                   <td className="pl-4 py-3">
                     {highlightSearchTerm(emp.Back_Name, searchQuery)}
                   </td>
@@ -257,9 +245,7 @@ const EmployeeTable = () => {
                       Bank Proof
                     </a>
                   </td>
-                  <td className="pl-4 py-3">
-                    {highlightSearchTerm(emp.salary, searchQuery)}
-                  </td>
+               
 
                   <td className="pl-4 py-6 flex gap-2 text-lg">
                     <FaEye

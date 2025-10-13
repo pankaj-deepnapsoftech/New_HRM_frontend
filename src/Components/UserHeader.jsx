@@ -31,45 +31,31 @@ const UserHeader = ({ isMobile }) => {
   }, []);
 
   return (
-    <div
-      className={`w-full h-16 bg-white px-4 sm:px-6 md:px-10 flex items-center justify-end z-10 ${
-        isMobile ? "" : "shadow-md"
+    <div className={`w-full h-16 bg-gray-100 px-4 sm:px-6 md:px-10 flex items-center justify-end z-10 ${isMobile ? "" : "shadow-md"
       }`}
     >
+      <div className="flex items-center gap-10"></div>
       {/* Right Section: Notification & User */}
-      <div className="flex items-center gap-5 ml-auto relative">
-        {/* Notification */}
-        <div className="relative">
-          <button
-            onClick={() => setShowNotification(!showNotification)}
-            className="relative p-2 rounded-full hover:bg-gray-100 transition-colors"
-          >
-            <FaRegBell className="text-gray-600 text-xl sm:text-2xl" />
-            {/* Notification Dot */}
-            <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></span>
+      <div className="flex items-center gap-4 ml-auto">
+        <div className=" w-10 h-10 flex items-center justify-center rounded-full">
+          <button onClick={() => setShowNotification(!showNotification)}>
+            <FaRegBell className="text-gray-600 text-2xl" />
           </button>
           {showNotification && (
-            <div
-              ref={notificationRef}
-              className="absolute right-0 mt-3 w-72 sm:w-80 bg-white rounded-xl shadow-lg border border-gray-200 z-50"
-            >
+            <div ref={notificationRef} className="absolute right-0 top-8 z-50">
               <EmpNotification />
             </div>
           )}
         </div>
-
-        {/* User Avatar */}
         <div className="relative">
           <div
             onClick={() => setShowEmpMenuBar(!showEmpMenuBar)}
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-lg w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center cursor-pointer shadow-md hover:scale-105 transition-transform"
+            className="bg-[#906eb1fd] text-gray-100 font-semibold text-xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
           >
             {userInitials}
           </div>
         </div>
       </div>
-
-      {/* Drawer / Sidebar */}
       <EmpMenuBar
         setShowEmpMenuBar={setShowEmpMenuBar}
         showEmpMenuBar={showEmpMenuBar}

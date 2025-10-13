@@ -27,29 +27,31 @@ const EmpLeaveBalance = () => {
     control: (base, state) => ({
       ...base,
       borderRadius: "0.5rem",
-      borderColor: state.isFocused ? "#8B5CF6" : "#E9D5FF",
-      boxShadow: state.isFocused ? "0 0 0 2px rgba(139, 92, 246, 0.4)" : "none",
+      borderColor: state.isFocused ? "#6366F1" : "#E5E7EB",
+      boxShadow: state.isFocused ? "0 0 0 2px rgba(99,102,241,0.3)" : "none",
       padding: "2px 4px",
       fontSize: "0.95rem",
       transition: "all 0.2s ease-in-out",
-      "&:hover": { borderColor: "#8B5CF6" },
+      backgroundColor: "white",
+      "&:hover": { borderColor: "#6366F1" },
     }),
     option: (base, state) => ({
       ...base,
       backgroundColor: state.isSelected
-        ? "#C084FC"
+        ? "#A5B4FC"
         : state.isFocused
-          ? "#E9D5FF"
-          : "white",
+        ? "#E0E7FF"
+        : "white",
       color: "black",
       cursor: "pointer",
     }),
     menu: (base) => ({
       ...base,
       borderRadius: "0.5rem",
-      boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)",
+      boxShadow: "0 8px 16px rgba(0, 0, 0, 0.08)",
       overflow: "hidden",
       marginTop: "4px",
+      zIndex: 20,
     }),
     singleValue: (base) => ({ ...base, color: "#111827" }),
     indicatorSeparator: () => ({ display: "none" }),
@@ -63,7 +65,7 @@ const EmpLeaveBalance = () => {
       days: "",
     },
     validationSchema: EmpLeaveSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
         const empId = values.employee.value;
         const leaveField =
@@ -77,22 +79,28 @@ const EmpLeaveBalance = () => {
         const current = selectedEmp?.[leaveField] || 0;
         const newCount = Math.max(current + isIncrement * change, 0);
 
-        // ✅ Use RTK Query to update
         await updateEmpData({
           id: empId,
           [leaveField]: newCount,
         }).unwrap();
 
-        alert("Leave balance updated successfully!");
-        formik.resetForm();
+        alert("✅ Leave balance updated successfully!");
+        resetForm();
       } catch (err) {
         console.error("Update failed:", err);
-        alert("Something went wrong, check console.");
+        alert("❌ Something went wrong, check console.");
+      } finally {
+        setSubmitting(false);
       }
     },
   });
 
-  if (isLoading) return <p>Loading employees...</p>;
+  if (isLoading)
+    return (
+      <div className="text-center py-20 text-lg text-gray-600 font-medium animate-pulse">
+        Loading employee list...
+      </div>
+    );
 
   const employeeOptions = employees.map((emp) => ({
     value: emp._id,
@@ -100,14 +108,18 @@ const EmpLeaveBalance = () => {
   }));
 
   return (
-    <div className="bg-gray-100 flex items-center justify-center pt-20 md:pt-10 p-5">
-      <div className="bg-white shadow-lg rounded-2xl w-full max-w-3xl p-10">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">
-          Employee Leave Balance
+    <div className="bg-gray-100 min-h-screen flex items-center justify-center px-4 py-10">
+      <div className="bg-white shadow-2xl rounded-xl -mt-20 w-full max-w-3xl p-8 md:p-10 transition-all duration-300">
+        <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8">
+          Update Employee Leave Balance
         </h2>
+
         <form onSubmit={formik.handleSubmit} className="space-y-6">
+          {/* Employee */}
           <div>
-            <label className="block font-medium text-gray-700 mb-2">Employee</label>
+            <label className="block font-medium text-gray-700 mb-2">
+              👤 Employee
+            </label>
             <Select
               name="employee"
               options={employeeOptions}
@@ -118,12 +130,17 @@ const EmpLeaveBalance = () => {
               placeholder="Select an Employee"
             />
             {formik.touched.employee && formik.errors.employee && (
-              <p className="text-sm text-red-500 mt-1">{formik.errors.employee}</p>
+              <p className="text-sm text-red-500 mt-1">
+                {formik.errors.employee}
+              </p>
             )}
           </div>
 
+          {/* Leave Type */}
           <div>
-            <label className="block font-medium text-gray-700 mb-2">Leave Type</label>
+            <label className="block font-medium text-gray-700 mb-2">
+              🏷️ Leave Type
+            </label>
             <Select
               name="leaveType"
               options={leaveTypes}
@@ -131,15 +148,20 @@ const EmpLeaveBalance = () => {
               onChange={(value) => formik.setFieldValue("leaveType", value)}
               onBlur={() => formik.setFieldTouched("leaveType", true)}
               styles={customSelectStyles}
-              placeholder="Select Leave Type"
+              placeholder="Full or Half-Day"
             />
             {formik.touched.leaveType && formik.errors.leaveType && (
-              <p className="text-sm text-red-500 mt-1">{formik.errors.leaveType}</p>
+              <p className="text-sm text-red-500 mt-1">
+                {formik.errors.leaveType}
+              </p>
             )}
           </div>
 
+          {/* Action */}
           <div>
-            <label className="block font-medium text-gray-700 mb-2">Action</label>
+            <label className="block font-medium text-gray-700 mb-2">
+              ➕➖ Action
+            </label>
             <Select
               name="action"
               options={actions}
@@ -147,16 +169,22 @@ const EmpLeaveBalance = () => {
               onChange={(value) => formik.setFieldValue("action", value)}
               onBlur={() => formik.setFieldTouched("action", true)}
               styles={customSelectStyles}
-              placeholder="Select Action"
+              placeholder="Increase or Decrease"
             />
             {formik.touched.action && formik.errors.action && (
-              <p className="text-sm text-red-500 mt-1">{formik.errors.action}</p>
+              <p className="text-sm text-red-500 mt-1">
+                {formik.errors.action}
+              </p>
             )}
           </div>
 
+          {/* Days Input */}
           <div>
-            <label htmlFor="days" className="block font-medium text-gray-700 mb-2">
-              Days
+            <label
+              htmlFor="days"
+              className="block font-medium text-gray-700 mb-2"
+            >
+              📆 Number of Days
             </label>
             <input
               type="number"
@@ -167,19 +195,24 @@ const EmpLeaveBalance = () => {
               value={formik.values.days}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className="w-full border border-gray-400 rounded-lg p-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-gray-600"
+              className="w-full border border-gray-300 rounded-lg p-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+              placeholder="e.g., 1 or 0.5"
             />
             {formik.touched.days && formik.errors.days && (
               <p className="text-sm text-red-500 mt-1">{formik.errors.days}</p>
             )}
           </div>
 
-          <div className="text-center">
+          {/* Submit */}
+          <div className="text-center pt-4">
             <button
               type="submit"
-              className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md"
+              disabled={formik.isSubmitting}
+              className={`bg-gradient-to-br from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white px-6 py-3 rounded-lg shadow-lg font-semibold transition-all duration-300 transform hover:scale-105 ${
+                formik.isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
-              Update Leave Balance
+              {formik.isSubmitting ? "Updating..." : "Update Leave Balance"}
             </button>
           </div>
         </form>
